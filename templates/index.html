@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+   <head>	  
+   	<h1 align="center" style="font-size:50px;color:blue;">Restaurant Finder</h1>   	
+      <title>Restaurant Finder</title>
+      <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">          
+          <link rel="stylesheet" href="static/bootstrap.min.css">
+          <link rel="stylesheet" href="static/flask_tuts.css">
+          <link rel="stylesheet" href="static/leaflet.css">
+          <link rel="stylesheet" href="static/loading.css">
+          <script type="text/javascript" src="static/jquery.min.js"></script> 
+          <script type="text/javascript" src="static/jquery-1.11.0.min.js"></script>       
+          <script type="text/javascript" src="static/bootstrap.min.js"></script>  
+          <script type="text/javascript" src="static/leaflet.js"></script>                 
+          <script type="text/javascript" src="static/flask_tuts.js?version=0.4"></script>       
+          
+   </head>
+
+   <body>   	
+      <div class="container-fluid">      	
+     <div class="row">
+      <div class="col-6">
+        <div class="row">
+            <input type="text" id = "restaurant" class="form-control mt-2" placeholder="Restaurant Name" required>
+       </div>
+      	<div class="row">
+           	<input type="text" id = "city" class="form-control mt-2" placeholder="City" required>
+       </div>       
+	   <div class="row">
+        	<input type="text" id = "state" class="form-control mt-2" placeholder="State" required>
+    </div>
+    <div class="row">
+          <input type="text" id = "zipcode" class="form-control mt-2" placeholder="zipcode" required>
+    </div>   
+    <div class="row">
+          <input type="text" id = "radius" class="form-control mt-2" placeholder="radius" required>
+    </div>   
+    <div class="btn-toolbar form-group">
+          <button type="button" class="btn btn-primary col-sm-0" onclick="getrestaurants()" style="margin-top:50px;">Submit</button>
+    </div>     
+      </div>
+        <div class="col-6" id ="map_div" >
+	         <div id="map" style="width: 100%;height: 800px;float: right;margin-top: 1px;position: relative" class="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0"><div class="leaflet-map-pane" style="transform: translate3d(2511px, -228px, 0px);"><div class="leaflet-tile-pane"><div class="leaflet-layer"><div class="leaflet-tile-container leaflet-zoom-animated" style=""></div><div class="leaflet-tile-container leaflet-zoom-animated" style=""><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/3/0.png" style="height: 256px; width: 256px; left: -1815px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/3/1.png" style="height: 256px; width: 256px; left: -1815px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/2/0.png" style="height: 256px; width: 256px; left: -2071px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/4/0.png" style="height: 256px; width: 256px; left: -1559px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/2/1.png" style="height: 256px; width: 256px; left: -2071px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/4/1.png" style="height: 256px; width: 256px; left: -1559px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/1/0.png" style="height: 256px; width: 256px; left: -2327px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/5/0.png" style="height: 256px; width: 256px; left: -1303px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/1/1.png" style="height: 256px; width: 256px; left: -2327px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/5/1.png" style="height: 256px; width: 256px; left: -1303px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/3/2.png" style="height: 256px; width: 256px; left: -1815px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/2/2.png" style="height: 256px; width: 256px; left: -2071px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/4/2.png" style="height: 256px; width: 256px; left: -1559px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/1/2.png" style="height: 256px; width: 256px; left: -2327px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/5/2.png" style="height: 256px; width: 256px; left: -1303px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/0/1.png" style="height: 256px; width: 256px; left: -2583px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/0/0.png" style="height: 256px; width: 256px; left: -2583px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/0/2.png" style="height: 256px; width: 256px; left: -2583px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/7/1.png" style="height: 256px; width: 256px; left: -2839px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/7/0.png" style="height: 256px; width: 256px; left: -2839px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/7/2.png" style="height: 256px; width: 256px; left: -2839px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/6/1.png" style="height: 256px; width: 256px; left: -3095px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/6/0.png" style="height: 256px; width: 256px; left: -3095px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/6/2.png" style="height: 256px; width: 256px; left: -3095px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/5/1.png" style="height: 256px; width: 256px; left: -3351px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/6/1.png" style="height: 256px; width: 256px; left: -1047px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/5/0.png" style="height: 256px; width: 256px; left: -3351px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/6/0.png" style="height: 256px; width: 256px; left: -1047px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/5/2.png" style="height: 256px; width: 256px; left: -3351px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/6/2.png" style="height: 256px; width: 256px; left: -1047px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/7/1.png" style="height: 256px; width: 256px; left: -791px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/7/0.png" style="height: 256px; width: 256px; left: -791px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/7/2.png" style="height: 256px; width: 256px; left: -791px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/4/1.png" style="height: 256px; width: 256px; left: -3607px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/0/1.png" style="height: 256px; width: 256px; left: -535px; top: 367px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://b.tile.openstreetmap.org/3/4/0.png" style="height: 256px; width: 256px; left: -3607px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/0/0.png" style="height: 256px; width: 256px; left: -535px; top: 111px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://a.tile.openstreetmap.org/3/4/2.png" style="height: 256px; width: 256px; left: -3607px; top: 623px;"><img class="leaflet-tile leaflet-tile-loaded" src="http://c.tile.openstreetmap.org/3/0/2.png" style="height: 256px; width: 256px; left: -535px; top: 623px;"></div></div></div><div class="leaflet-objects-pane"><div class="leaflet-shadow-pane"></div><div class="leaflet-overlay-pane"></div><div class="leaflet-marker-pane"></div><div class="leaflet-popup-pane"></div></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in">+</a><a class="leaflet-control-zoom-out" href="#" title="Zoom out">-</a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | © <a href="http://openstreetmap.org">OpenStreetMap</a> Contributors
+                      <button id="clear_routes" onclick="clearMap()" style="
+                      position: absolute;
+                      right: 0px;
+                      bottom: 15px;
+                  ">Clear Markers</button>
+                    </div>
+        </div>
+      </div>
+    </div>
+    </div>     
+    </div>        
+	</div>
+
+
+  </body>
+
+  <script type="text/javascript">
+         var map = L.map('map').setView([46.76336,-71.32453], 16);
+      mapLink =
+          '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+      L.tileLayer(
+          'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; ' + mapLink + ' Contributors',
+          maxZoom: 18,
+          }).addTo(map);
+  </script>
+
+</html>
