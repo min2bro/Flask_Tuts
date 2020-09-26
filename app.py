@@ -12,17 +12,8 @@ geopy.geocoders.options.default_ssl_context = ctx
 class mongo_connection:
   conn = None
 
-  def connect(self):
-    client = pymongo.MongoClient("mongodb+srv://marcustest:<password>@cluster0.xh91t.mongodb.net/?retryWrites=true&w=majority")
-    db = client.sample_restaurants
-    self.conn = db["restaurant_regex"]
-
-  def query(self, mql):
-      cursor = self.conn.find(mql)  
-      return cursor 
-
-db = mongo_connection()
-db.connect()
+db = pymongo.MongoClient("mongodb+srv://marcustest:<password>@cluster0.xh91t.mongodb.net/?retryWrites=true&w=majority").sample_restaurants
+print(db)
 
 app = Flask(__name__)
 
@@ -33,17 +24,14 @@ def index():
 @app.route('/api/v1.0/tasks/autoc2/restaurantfinder', methods=['GET'])
 def getrestaurants(): 
     restname = request.args.get('restaurant')
-    borough = request.args.get('borough')
-    state = request.args.get('state')
+
     zipcode = request.args.get('zipcode')
     rad = request.args.get('radius')
-    coord = request.args.get('coord')
     print(f'rad: {rad}')
     print(f'type(rad): {type(rad)}')
     print(f'restaurant: {str(restname)}')
     print(f'type(cord): {type(restname)}')
 
-    print(restname,borough,state,zipcode)
 
     print(f'zip_or_addr: {zipcode}')
 
@@ -57,13 +45,13 @@ def getrestaurants():
 
     METERS_PER_MILE = 1609.34
 
-    filters = { 'location': { '$nearSphere': { '$geometry': { 'type': "Point", 
-                                     'coordinates': [ lon, lat ] }, 
-                                    '$maxDistance': int(rad) * METERS_PER_MILE } },
-                                    'name': {'$regex': restname, "$options" : "i"}}
-    
-    
-    documents = db.query(filters)
+    # filters = { 'location': { '$nearSphere': { '$geometry': { 'type': "Point", 
+    #                                  'coordinates': [ lon, lat ] }, 
+    #                                 '$maxDistance': int(rad) * METERS_PER_MILE } },
+    #                                 'name': {'$regex': restname, "$options" : "i"}}
+    pipeline = [ { "$search": { "index": "restaurant_fts","compound":  { "must": { "text": { "query": restname, "path": "name"} } , "should": { "near": { "origin": {"type": "Point","coordinates": [lat, lon] }, "pivot": 500, "path": "location"     } } }} } ]    
+    documents = db.restaurant_regex.aggregate(pipeline)
+    print(documents)
 
     for document in documents:
         nearby_restaurants.append({

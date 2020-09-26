@@ -23,27 +23,24 @@ var markerIcon = L.Icon.extend({
 
 var loadoriginIcon = new markerIcon({iconUrl: makeMarkerUri( loadoriginUri )})    
 
- function getrestaurants() {	 	
-        
-         var restname = document.getElementById("restaurant").value;  
-         var city = document.getElementById("city").value;  
-         var state = document.getElementById("state").value;  
-         var zipcode = document.getElementById("zipcode").value; 
-         var radius = document.getElementById("radius").value;        
+function getrestaurants() {	 	
+  if(restname && restname.length > 1){
+  var restname = document.getElementById("restaurant").value;  
+  var zipcode = document.getElementById("zipcode").value; 
+  var radius = document.getElementById("radius").value;        
+  
+    
+    $.ajax({
+      url: '/api/v1.0/tasks/autoc2/restaurantfinder?restaurant='+restname+'&zipcode='+zipcode+'&radius='+radius,
+      type: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        UpdateMap(data)    
+      }
 
-         
-        $.ajax({
-            url: '/api/v1.0/tasks/autoc2/restaurantfinder?restaurant='+restname+'&city='+city+'&state='+state+'&zipcode='+zipcode+'&radius='+radius,
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-              UpdateMap(data)    
-            }
-
-        });
-
-
-     }
+    });
+  }
+}
 
 
 function UpdateMap(data){
