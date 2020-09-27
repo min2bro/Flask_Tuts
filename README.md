@@ -21,7 +21,7 @@ This revised repo is meant to demonstrate a few of the many benefits of moving m
 
 * _Fuzzy matching_ - typos are frequent, especially on those tiny mobile keyboards. Rest assured that if your user types a query with a typo, relevant results are still returned. 
 
-* _Diacritic folding_ - again, I am sure there is a way to do this with case-insensitive regex, but it cannot be as easy or predictable at it is in Atlas Search. There, you just need to include a boolean variable for the foldDiacritics `variable` in your index definition.
+* _Diacritic folding_ - again, I am sure there is a way to do this with case-insensitive regex, but it cannot be as easy or predictable at it is in Atlas Search. There, you just need to include a boolean variable for the `foldDiacritics` variable in your index definition.
 
 * _Many search operators_ - perhaps the best feature you get from Atlas Search when compared to case-insensitive regex queries would be the collection of <a href="https://docs.atlas.mongodb.com/atlas-search?utm_source=regex_replacement" target="_blank">search operators</a>. With them, you can craft a search experience that truly captures your user's intent.
 
@@ -125,7 +125,7 @@ For reference, here are the two very similar though not identical queries, with 
     <th>Case-Insensitive Regex</th>
   </tr>
   <tr>
-    <td>
+    <td class="highlight-source-js">
 
         { 
           "$search": { 
@@ -142,14 +142,14 @@ For reference, here are the two very similar though not identical queries, with 
                 "near": { 
                   "origin": { 
                     "type": "Point",
-                    "coordinates": [lat, lon] 
+                    "coordinates": [ lat, lon ] 
                     }, 
                   "pivot": int(rad) * METERS_PER_MILE, 
                   "path": "location"     
             } } } } }
     
 </td>
-<td>  
+<td class="highlight-source-js">  
 
         {
           "location": { 
