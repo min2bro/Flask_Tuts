@@ -1,6 +1,6 @@
 # The Common `$regex` Anti-Pattern
 
-If you are building a full-text search app with MongoDB and use a case-insensitive regex, stop and re-consider. You are probably paying for it in many ways, over-consumption of resources, angry customers, and more. Spin up a cluster on Atlas and create a Search Index on <a href="https://docs.atlas.mongodb.com/atlas-search?utm_source=regex_replacement" target="_blank">MongoDB Atlas Search</a> with the click of a button.
+If you are building a full-text search app with MongoDB and use a case-insensitive regex, stop and re-consider MongoDB Atlas Search. You are probably paying for it in many ways, over-consumption of resources, angry customers, and more. Spin up a cluster on Atlas and create a Search Index on <a href="https://docs.atlas.mongodb.com/atlas-search?utm_source=regex_replacement" target="_blank">MongoDB Atlas Search</a> with the click of a button.
 
 ## About this Project
 
@@ -8,6 +8,9 @@ This project is actually a very simple fork of an existing projec and blogpost w
 
 This revised repo is meant to demonstrate a few of the many benefits of moving most case-insentive regex queries (`$regex`) in MongoDB Atlas to <a href="https://docs.atlas.mongodb.com/atlas-search" target="_blank">MongoDB Atlas Search</a>, a Lucene-powered search engine built for the job. After a list of benefits, there's a tutorial below, along with some sample code in this repo. You can find the regex query code in the `regex_version` branch, and the Atlas Search code in the `fts_version` branch.
 
+Here's a picture of an Atlas Search fuzzy match, which would be exceedingly difficult and expensive to set up using the case-insenentive regex query shape. Apparently, ther are lots of bagels near the MongoDB HQ:
+<br/>
+<br/>
 <img src="https://user-images.githubusercontent.com/2353608/94356337-1c71e580-0042-11eb-9c7c-f09c4643160f.png" alt="Image of Atlas Search Fuzzy Match" width="800" height="600">
 
 ## The Benefits of `$search` Compared to `$regex`:
@@ -125,8 +128,8 @@ For reference, here are the two very similar though not identical queries, with 
     <th>Case-Insensitive Regex</th>
   </tr>
   <tr>
-    <td class="highlight-source-js">
-
+    <td class="highlight highlight-source-js">
+<pre>
         { 
           "$search": { 
             "index": "restaurant_fts",
@@ -147,9 +150,9 @@ For reference, here are the two very similar though not identical queries, with 
                   "pivot": int(rad) * METERS_PER_MILE, 
                   "path": "location"     
             } } } } }
-    
+    </pre>
 </td>
-<td class="highlight-source-js">  
+<td class="highlight highlight-source-js">  
 
         {
           "location": { 
