@@ -1,0 +1,7 @@
+### If you are on Python 3.6 or later, the ssl library should be included in the language. If not, you may need to install that. Good luck! :) Ping me with questions.
+
+certifi==2020.6.20
+flask==1.1.2
+geopy==2.0.0
+pymongo==3.11.0
+
