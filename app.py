@@ -9,11 +9,8 @@ import geopy.geocoders
 ctx = ssl.create_default_context(cafile=certifi.where())
 geopy.geocoders.options.default_ssl_context = ctx
 
-class mongo_connection:
-  conn = None
 
-db = pymongo.MongoClient("mongodb+srv://marcustest:<password>@cluster0.xh91t.mongodb.net/?retryWrites=true&w=majority").sample_restaurants
-print(db)
+db = pymongo.MongoClient("mongodb+srv://<username>:<password>@.mongodb.net/?retryWrites=true&w=majority").<database_name>
 
 app = Flask(__name__)
 
@@ -27,13 +24,6 @@ def getrestaurants():
 
     zipcode = request.args.get('zipcode')
     rad = request.args.get('radius')
-    print(f'rad: {rad}')
-    print(f'type(rad): {type(rad)}')
-    print(f'restaurant: {str(restname)}')
-    print(f'type(cord): {type(restname)}')
-
-
-    print(f'zip_or_addr: {zipcode}')
 
     geolocator = Nominatim(user_agent='myapplication')
     location = geolocator.geocode(int(zipcode), timeout=None)
@@ -41,17 +31,13 @@ def getrestaurants():
     lon=float(location.raw['lon']) 
     nearby_restaurants = [{'orig_lat':lat, 'orig_lon':lon}]
 
-    print(lat,lon)   
-
     METERS_PER_MILE = 1609.34
 
-    # filters = { 'location': { '$nearSphere': { '$geometry': { 'type': "Point", 
-    #                                  'coordinates': [ lon, lat ] }, 
-    #                                 '$maxDistance': int(rad) * METERS_PER_MILE } },
-    #                                 'name': {'$regex': restname, "$options" : "i"}}
-    pipeline = [ { "$search": { "index": "restaurant_fts","compound":  { "must": { "text": { "query": restname, "path": "name"} } , "should": { "near": { "origin": {"type": "Point","coordinates": [lat, lon] }, "pivot": 500, "path": "location"     } } }} } ]    
+    pipeline = [ { "$search": { "index": "restaurant_fts","compound":  { 
+        "must": { "text": { "query": restname, "path": "name", "fuzzy": {"maxEdits":2}} },
+        "should": { "near": { "origin": {"type": "Point","coordinates": [lat, lon] }, "pivot": int(rad) * METERS_PER_MILE, "path": "location"     } } }} } ]    
+
     documents = db.restaurant_regex.aggregate(pipeline)
-    print(documents)
 
     for document in documents:
         nearby_restaurants.append({
@@ -63,9 +49,3 @@ def getrestaurants():
         
 
     return jsonify(nearby_restaurants)
-
-
-
-# { 'location': { '$nearSphere': { '$geometry': { 'type': "Point",'coordinates': [40.8283807,-73.9270844] },'$maxDistance': 5 * 1609.34 } } }
-
-# {location: {$nearSphere: { $geometry: { type: "Point",coordinates: [40.8283807,-73.9270844] },$maxDistance:7609.34 } } }
