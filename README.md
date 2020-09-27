@@ -57,7 +57,7 @@ This revised repo is meant to demonstrate a few of the many benefits of moving m
 
 * It should look something like this: 
 
-`db = pymongo.MongoClient("mongodb+srv://<username>:<password>@connection_string.mongodb.net/?retryWrites=true&w=majority").sample_restaurants`
+`db = pymongo.MongoClient("mongodb+srv://<username>:<password>@connection_string.mongodb.net/?retryWrites=true&w=majority").<database_name>`
 
 
 6. Load the <a href="https://raw.githubusercontent.com/mongodb/docs-assets/geospatial/restaurants.json" target="_blank">sample data</a> into the cluster using [Compass](https://www.mongodb.com/products/compass) or the Mongo Shell.
