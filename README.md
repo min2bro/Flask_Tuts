@@ -180,6 +180,6 @@ There's a lot more room for customization and improvement in this example, but t
 
 #### Footnote
 
-1. We could make the compound operator filter out results that are farther than the desired radius. The reason for this result set is due to the fact that location here is a score factor, not a filter factor. Most search engines use location in this manner to start and offer users the option to filter out results greater than a certain mileage. 
+1. We could make the compound operator filter out results that are farther than the desired radius. The reason for this result set is due to the fact that location here is a score factor, not a filter factor. Most search engines use location in this manner to start and offer users the option to filter out results greater than a certain distance away from a point of interest. 
 
 
