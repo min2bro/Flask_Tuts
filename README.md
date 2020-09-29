@@ -4,7 +4,7 @@ If you are building a full-text search app with MongoDB and use a case-insensiti
 
 ## About this Project
 
-This project is actually a very simple fork of an existing projec and blogpost where someone built a full-text search app in MongoDB using case-insensitive regex. Going forward, case-insensitive regex queries to power full-text search should be considered an anti-pattern. This repo is not an axample of how to build a Flask App. I read a blogpost about a search app built using $regex in and revised it to use Atlas Search. Hopefully this README makes it it easy to see how you could immediately get value from a small refactor to move case-insensitive regex to Atlas Search.
+This project is actually a very simple fork of an existing project and blogpost where someone built a full-text search app in MongoDB using case-insensitive regex. Going forward, case-insensitive regex queries to power full-text search should be considered an anti-pattern. This repo is not an axample of how to build a Flask App. I read a blogpost about a search app built using $regex in and revised it to use Atlas Search. Hopefully this README makes it it easy to see how you could immediately get value from a small refactor to move case-insensitive regex to Atlas Search.
 
 This revised repo is meant to demonstrate a few of the many benefits of moving most case-insentive regex queries (`$regex`) in MongoDB Atlas to <a href="https://docs.atlas.mongodb.com/atlas-search" target="_blank">MongoDB Atlas Search</a>, a Lucene-powered search engine built for the job. After a list of benefits, there's a tutorial below, along with some sample code in this repo. You can find the regex query code in the `regex_version` branch, and the Atlas Search code in the `fts_version` branch.
 
