@@ -18,7 +18,7 @@ Here's a picture of an Atlas Search fuzzy match, which would be exceedingly diff
 
 * _Resource consumption_ - case-insensitive regex queries are expensive in any database engine. If you run them often and on even a modest dataset, e.g. ~50,000 documents, you will start to see performance hits on those queries and others. Atlas Search runs as a separate process in your replica set, `mongot`, so your workload can continue per usual without unnecessary disruption from a computationally expensive query shape. 
 
-* _Speed_ - case-insensitive queries hurt the user experience of your application because they can be very slow. With Atlas Search, most queries are faster the first time, and almost all identical queries are faster because we can cache queries.  
+* _Speed_ - case-insensitive queries hurt the user experience of your application because they can be very slow. Atlas Search is built on Apache Lucene and optimized for the text search use case in ways that a database cannot be.
 
 * _Autocomplete_ - users have grown accustomed to autcomplete in the search box. While you could hack together autocomplete for a case-insensitive regex queries, they would be slow, often inaccurate, and prohibitively expensive. I don't demonstrate that in this blogpost.
 
