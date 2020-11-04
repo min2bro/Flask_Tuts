@@ -1,1 +1,1 @@
-web: python app.py 9763
+web: flask run 9763
