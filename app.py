@@ -5,6 +5,7 @@ from geopy.geocoders import Nominatim
 import ssl
 import certifi
 import geopy.geocoders
+app = Flask(__name__)
 
 ### Stores secret files for deployment on Heroku as seen here: https://github.com/MirelaI/flask_config_example. Please note that there are better ways to do this, but I wanted to make the tutorial accessible for largest audience.
 app.config.from_json('config.json')
@@ -75,3 +76,4 @@ def getrestaurants():
         
 
     return jsonify(nearby_restaurants)
+app.run(host='0.0.0.0',port=9763,debug=True)
