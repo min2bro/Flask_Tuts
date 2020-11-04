@@ -6,11 +6,14 @@ import ssl
 import certifi
 import geopy.geocoders
 
+### Stores secret files for deployment on Heroku as seen here: https://github.com/MirelaI/flask_config_example. Please note that there are better ways to do this, but I wanted to make the tutorial accessible for largest audience.
+app.config.from_json('config.json')
+
 ctx = ssl.create_default_context(cafile=certifi.where())
 geopy.geocoders.options.default_ssl_context = ctx
 
 
-db = pymongo.MongoClient("mongodb+srv://<username>:<password>cluster.mongodb.net/?retryWrites=true&w=majority").sample_restaurants
+db = pymongo.MongoClient(app.config["ATLAS_URI"]).sample_restaurants
 
 app = Flask(__name__)
 
