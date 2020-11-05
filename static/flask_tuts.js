@@ -25,8 +25,8 @@ var markerIcon = L.Icon.extend({
 
 var loadoriginIcon = new markerIcon({iconUrl: makeMarkerUri( loadoriginUri )})    
 
-function getrestaurants() {	 	
-  var restname = document.getElementById("restaurant").value;  
+function getrestaurants() {
+  var restname = document.getElementById("restaurant").value;
   var zipcode = document.getElementById("zipcode").value; 
   var radius = document.getElementById("radius").value;        
   
@@ -44,9 +44,8 @@ function getrestaurants() {
 
 
 function UpdateMap(data){
-
   map.setView([data[0]['orig_lat'],data[0]['orig_lon']], 10);
-     
+
 
   for (m=1;m<data.length;m++){
   marker = new L.marker([data[m]['lat'],data[m]['lon']], {
@@ -58,8 +57,12 @@ function UpdateMap(data){
           .addTo(map)
           .bindPopup(data[m]['restaurant_name'])
           markerarr.push(marker);
+          var node = document.createElement("li");
+              node.classList.add("list-group-item");
+          node.textContent = data[m]['restaurant_name'];
+          document.getElementById("restaurant-list").appendChild(node);
         }
-
+  console.log(data);
 }
 
 
@@ -68,7 +71,7 @@ function UpdateMap(data){
 
 /*Clear all Markers and Polylines on the map*/
 function clearMap() {
-
+    // TODO: remove previous search results
 /*Remove markers*/
 for(i=0;i<markerarr.length;i++) {
     map.removeLayer(markerarr[i]);

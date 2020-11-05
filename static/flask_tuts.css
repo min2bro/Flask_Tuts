@@ -53,6 +53,9 @@ only screen and (max-width: 760px),
     top: -9999px;
     left: -9999px;
   }
+  #restaurant-list {
+    float: left;
+  }
 
   tr { border: 1px solid #ccc; }
 
