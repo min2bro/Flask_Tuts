@@ -63,7 +63,8 @@ def getrestaurants():
                                 }
                             }]
                             }
-                        }  }]
+                        }  },
+        { "$limit": 20}]
     documents = db.restaurant_regex.aggregate(pipeline)
 
     for document in documents:
