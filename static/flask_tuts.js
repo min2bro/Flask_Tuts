@@ -42,10 +42,36 @@ function getrestaurants() {
   });
 }
 
+// hacked together autocomplete implementation
+
+(function($){
+  $(function(){
+    let zipcode = '10451',
+            radius='10';
+    $("#restaurant").autocomplete({
+      source: async function(request, response){
+        let data = await fetch(`http://localhost:5000/api/v1.0/tasks/autoc2/restaurantfinder/autocomplete?restaurant=${request.term}&zipcode=${zipcode}&radius=${radius}`)
+        .then(results => results.json())
+        .then(results => results.map(result => {
+          return { label: result.restaurant_name, value: result.restaurant_name, lat: result.lat, lon: result.lon}
+        }));
+        // remove the undefined element of the response array so that it doesn't show in up in autocomplete
+        data.shift();
+        response(data);
+      },
+      minlength: 2,
+      select: (event, ui) => {
+          console.log(ui.item);
+          getrestaurants(ui.item.value);
+      }
+    });
+  })
+})(jQuery)
+
 
 function UpdateMap(data){
   map.setView([data[0]['orig_lat'],data[0]['orig_lon']], 10);
-
+  jQuery("#restaurant-list").empty();
 
   for (m=1;m<data.length;m++){
   marker = new L.marker([data[m]['lat'],data[m]['lon']], {
@@ -65,6 +91,29 @@ function UpdateMap(data){
   console.log(data);
 }
 
+function UpdateMapAutocomplete(data){
+  var lon = "-73.90",
+    lat = "40.76";
+  map.setView([lat,lon], 10);
+  jQuery("#restaurant-list").empty();
+  for (m=1;m<data.length;m++){
+  marker = new L.marker([lat,lon], {
+          icon: loadoriginIcon,
+          riseOnHover: true,
+          draggable: false,
+          autoPan: true,
+         })
+          .addTo(map)
+          .bindPopup(data[m]['restaurant_name'])
+          markerarr.push(marker);
+
+          var node = document.createElement("li");
+              node.classList.add("list-group-item");
+          node.textContent = data[m]['restaurant_name'];
+          document.getElementById("restaurant-list").appendChild(node);
+        }
+  console.log(data);
+}
 
 
 

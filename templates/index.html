@@ -2,7 +2,7 @@
 <html>
    <head>	  
    	<h1 align="center" style="font-size:50px;color:blue;">Restaurant Finder</h1>   	
-      <title>Restaurant Finder</title>
+      <title>New York City Restaurant Finder</title>
       <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">          
           <link rel="stylesheet" href="static/bootstrap.min.css">
@@ -13,25 +13,32 @@
           <script type="text/javascript" src="static/jquery-1.11.0.min.js"></script>       
           <script type="text/javascript" src="static/bootstrap.min.js"></script>  
           <script type="text/javascript" src="static/leaflet.js"></script>                 
-          <script type="text/javascript" src="static/flask_tuts.js"></script>       
+          <script type="text/javascript" src="static/flask_tuts.js"></script>
+          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
           
    </head>
 
    <body>   	
-      <div class="container-fluid">      	
+      <div class="container-fluid">         `
      <div class="row">
       <div class="col-6">
-        <div class="row">
-            <input type="text" id = "restaurant" class="form-control mt-2" placeholder="Restaurant Name" required>
+        <div class="row" style="margin-top: 15px;">
+            <label for="restaurant">Restaurant Name:</label>
+            <input type="text" id ="restaurant" class="form-control mt-2">
+            <ul class="autocomplete-items" id="rest_name"></ul>
+{#            <br>#}
        </div>
-    <div class="row">
-          <input type="text" id = "zipcode" class="form-control mt-2" placeholder="zipcode" required>
+    <div class="row" style="margin-top: 15px;" hidden>
+          <label for="zipcode">Zipcode (ex: 10451):</label>
+          <input type="text" id = "zipcode" class="form-control mt-2" value="10451">
+          <br>
     </div>   
-    <div class="row">
-          <input type="text" id = "radius" class="form-control mt-2" placeholder="radius" required>
+    <div class="row" style="margin-top: 15px;" hidden>
+          <label for="radius">Radius in miles (ex: 10):</label>
+          <input type="text" id = "radius" class="form-control mt-2" value="10">
     </div>   
     <div class="btn-toolbar form-group">
-          <button type="button" class="btn btn-primary col-sm-0" onclick="getrestaurants()" style="margin-top:50px;">Submit</button>
+          <button type="button" id="find-restaurants" class="btn btn-primary col-sm-0"  onclick="getrestaurants()" style="margin-top:50px;">Submit</button>
     </div>
     <div id="restaurant-div">
         <ul class="list-group" id="restaurant-list">
@@ -75,6 +82,8 @@
           attribution: '&copy; ' + mapLink + ' Contributors',
           maxZoom: 18,
           }).addTo(map);
+
+
   </script>
 
 </html>
