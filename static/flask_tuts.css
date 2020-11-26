@@ -158,3 +158,6 @@ div.ui-helper-hidden-accessible:last-child{
   background-color: #5a6268 !important;
   color: #ffffff;
 }
+.search-content {
+  padding-left: 5%;
+}
