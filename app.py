@@ -38,17 +38,34 @@ def getrestaurants():
 
     METERS_PER_MILE = 1609.34
 
-    pipeline = [ { "$search": { "index": "restaurant_fts","compound":  { 
-    "must": { "text": { "query": restname, "path": "name", "fuzzy": {"maxEdits":2}} },
-    "should": { "near": { "origin": {"type": "Point","coordinates": [lat, lon] }, "pivot": int(rad) * METERS_PER_MILE, "path": "location"     } } }} },{ "$limit": 20}]
-            
-    documents = db.restaurant_regex.aggregate(pipeline)
+    pipeline = [
+        { "$search": {
+            "index": "restaurant_fts_sample",
+            "compound":  {
+                "must": {
+                    "text": {
+                        "query": restname,
+                        "path": "name",
+                        "fuzzy": {
+                            "maxEdits":2
+                        } } },
+                "should": {
+                    "near": {
+                        "origin": {
+                            "type": "Point",
+                            "coordinates": [lat, lon]
+                        },
+                        "pivot": int(rad) * METERS_PER_MILE,
+                        "path": "address.coord"     } } }} },
+        { "$limit": 20}]
+
+    documents = db.restaurants.aggregate(pipeline)
 
     for document in documents:
         nearby_restaurants.append({
                        'restaurant_name':document['name'] ,
-                       'lat':document['location']['coordinates'][1],
-                       'lon':document['location']['coordinates'][0]
+                       'lat':document['address']['coord'][1],
+                       'lon':document['address']['coord'][0]
                 })
 
         
@@ -71,7 +88,7 @@ def suggest_restaurants():
     METERS_PER_MILE = 1609.34
 
     pipeline = [ { "$search": {
-                        "index": "rest_name_autocomplete",
+                        "index": "rest_name_autocomplete_sample",
                         "compound":  { 
                             "must": { 
                                     "autocomplete": {
@@ -84,13 +101,13 @@ def suggest_restaurants():
                     }
                 },
                 {"$limit": 20}]
-    documents = db.restaurant_regex.aggregate(pipeline)
+    documents = db.restaurants.aggregate(pipeline)
 
     for document in documents:
         nearby_restaurants.append({
                        'restaurant_name':document['name'] ,
-                       'lat':document['location']['coordinates'][1],
-                       'lon':document['location']['coordinates'][0]
+                       'lat':document['address']['coord'][1],
+                       'lon':document['address']['coord'][0]
                 })
 
         

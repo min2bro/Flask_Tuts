@@ -4,14 +4,14 @@ If you are building a full-text search app with MongoDB and use a case-insensiti
 
 ## About this Project
 
-This project is actually a very simple fork of an existing project and blogpost where someone built a full-text search app in MongoDB using case-insensitive regex. Going forward, case-insensitive regex queries to power full-text search should be considered an anti-pattern. This repo is not an axample of how to build a Flask App. I read a blogpost about a search app built using $regex in and revised it to use Atlas Search. Hopefully this README makes it it easy to see how you could immediately get value from a small refactor to move case-insensitive regex to Atlas Search.
+This project is actually a very simple fork of an existing project and blogpost where someone built a full-text search app in MongoDB using case-insensitive regex. Going forward, case-insensitive regex queries to power full-text search should be considered an anti-pattern. This repo is not an example of how to build a Flask App. Lots of the code could be improved. I read a blogpost about a search app built using $regex in and revised it to use Atlas Search. Hopefully this README makes it it easy to see how you could immediately get value from a small refactor to move case-insensitive regex to Atlas Search.
 
 This revised repo is meant to demonstrate a few of the many benefits of moving most case-insentive regex queries (`$regex`) in MongoDB Atlas to <a href="https://docs.atlas.mongodb.com/atlas-search" target="_blank">MongoDB Atlas Search</a>, a Lucene-powered search engine built for the job. After a list of benefits, there's a tutorial below, along with some sample code in this repo. You can find the regex query code in the `regex_version` branch, and the Atlas Search code in the `fts_version` branch.
 
 Here's a picture of an Atlas Search fuzzy match, which would be exceedingly difficult and expensive to set up using the case-insenentive regex query shape. Apparently, ther are lots of bagels near the MongoDB HQ:
 <br/>
 <br/>
-<img src="https://user-images.githubusercontent.com/2353608/94356337-1c71e580-0042-11eb-9c7c-f09c4643160f.png" alt="Image of Atlas Search Fuzzy Match" width="800" height="600">
+<img src="https://user-images.githubusercontent.comhttps://user-images.githubusercontent.com/2353608/100299681-18324d80-2f49-11eb-9d9f-bb0bd8b84827.png" alt="Image of Atlas Search Fuzzy Match" width="800" height="600">
 
 ## The Benefits of `$search` Compared to `$regex`:
 
@@ -93,7 +93,7 @@ There are many variations of a search index definition that you could use, but h
   "mappings": {
     "dynamic": false,
     "fields": {
-      "location": {
+      "address.coord": {
         "indexShapes": false,
         "type": "geo"
       },
@@ -106,6 +106,32 @@ There are many variations of a search index definition that you could use, but h
 }
 ```
 
+Here is the autocomple:te index definition used in the project 
+
+```javascript
+{
+  "mappings": {
+    "dynamic": false,
+    "fields": {
+      "address.coord": {
+        "indexShapes": false,
+        "type": "geo"
+      },
+      "name": [
+        {
+          "foldDiacritics": true,
+          "maxGrams": 15,
+          "minGrams": 2,
+          "tokenization": "edgeGram",
+          "type": "autocomplete"
+        }
+      ]
+    }
+  }
+}
+```
+
+
 10. Add the credentials from step 5, althogh the connection code will look slightly different and like this:
 
 `db = pymongo.MongoClient("mongodb+srv://<username>:<password>@connection_string.mongodb.net/?retryWrites=true&w=majority").sample_restaurants`
@@ -114,7 +140,7 @@ There are many variations of a search index definition that you could use, but h
 
 `flask run`
 
-12. Again, visit http://127.0.0.1:5000 in the browser and try out the search. Feel free to use your own query but for a consistent comparison, try entering `kentucky` in the name field, `10451` in the zip field, and `5` in the radius field then clicking `Submit`. Now, the greater number of results isn't totally due to Atlas Search's superioirity for the search use case, though one could argue.<sup>1</sup> 
+12. Again, visit http://127.0.0.1:5000 in the browser and try out the search. Feel free to use your own query but for a consistent comparison, try entering `kentucky` in the name field, `10451` in the zip field, and `5` in the radius field then clicking `Submit`. Now, the greater number of results isn't totally due to Atlas Search's superioirity for the search use case, though one could argue.<sup>1</sup> If you want to be underwhelmed, `git checkout regex_version` and try it again. 
 
 
 Try the `kentucke` search again. This, time, all the same results show up as in the previous correctly spelled search. That's because of the fuzzy parameter for the text operator.
@@ -148,14 +174,14 @@ For reference, here are the two very similar though not identical queries, with 
                     "coordinates": [ lat, lon ] 
                     }, 
                   "pivot": int(rad) * METERS_PER_MILE, 
-                  "path": "location"     
+                  "path": "address.coord"     
             } } } } }
     </pre>
 </td>
 <td class="highlight highlight-source-js">  
 
         {
-          "location": { 
+          "address.coord": { 
             "$nearSphere": { 
               "$geometry": { 
                 "type": "Point", 
