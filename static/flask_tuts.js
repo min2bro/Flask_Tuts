@@ -55,12 +55,13 @@ function getrestaurants() {
         .then(results => results.map(result => {
           return { label: result.restaurant_name, value: result.restaurant_name, lat: result.lat, lon: result.lon}
         }));
+        console.log(data);
         // remove the undefined element of the response array so that it doesn't show in up in autocomplete
-        data.shift();
         response(data);
       },
       minlength: 2,
       select: (event, ui) => {
+
           console.log(ui.item);
           getrestaurants(ui.item.value);
       }
