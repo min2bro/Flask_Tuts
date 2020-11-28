@@ -8,10 +8,10 @@ This project is actually a very simple fork of an existing project and blogpost 
 
 This revised repo is meant to demonstrate a few of the many benefits of moving most case-insentive regex queries (`$regex`) in MongoDB Atlas to <a href="https://docs.atlas.mongodb.com/atlas-search" target="_blank">MongoDB Atlas Search</a>, a Lucene-powered search engine built for the job. After a list of benefits, there's a tutorial below, along with some sample code in this repo. You can find the regex query code in the `regex_version` branch, and the Atlas Search code in the `fts_version` branch.
 
-Here's a picture of an Atlas Search fuzzy match, which would be exceedingly difficult and expensive to set up using the case-insenentive regex query shape. Apparently, ther are lots of bagels near the MongoDB HQ:
+Here's a picture of an Atlas Search fuzzy match, which would be exceedingly difficult and expensive to set up using the case-insenentive regex query shape. Apparently, there are lots of bagels near the MongoDB HQ:
 <br/>
 <br/>
-<img src="https://user-images.githubusercontent.comhttps://user-images.githubusercontent.com/2353608/100299681-18324d80-2f49-11eb-9d9f-bb0bd8b84827.png" alt="Image of Atlas Search Fuzzy Match" width="800" height="600">
+<img src="https://user-images.githubusercontent.com/2353608/100299681-18324d80-2f49-11eb-9d9f-bb0bd8b84827.png" alt="Image of Atlas Search Fuzzy Match" width="800" height="600">
 
 ## The Benefits of `$search` Compared to `$regex`:
 
@@ -106,7 +106,7 @@ There are many variations of a search index definition that you could use, but h
 }
 ```
 
-Here is the autocomple:te index definition used in the project 
+Here is the autocomplete index definition used in the project 
 
 ```javascript
 {
