@@ -115,3 +115,9 @@ def suggest_restaurants():
     return jsonify(nearby_restaurants)
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=9763,debug=True)
+
+    {
+        "name": "Marcus Eagan",
+        "role": ["Product Manager Atlas Search", "Open Source Hacker"],
+        "twitter": "@marcusforpeace"
+    }
