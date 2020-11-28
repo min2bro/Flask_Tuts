@@ -57,12 +57,13 @@ Here's a picture of an Atlas Search fuzzy match, which would be exceedingly diff
 
 `git checkout regex_version`
 
-5. Add your credentials to line 15 of `app.py`.
+5. Add your connection string to a file in the root project called `config.json`.
 
 * It should look something like this: 
 
-`db = pymongo.MongoClient("mongodb+srv://<username>:<password>@connection_string.mongodb.net/?retryWrites=true&w=majority").<database_name>`
-
+`{
+  "ATLAS_URI": "mongodb+srv://<db_user>:<db_password>@cluster0.xh91t.mongodb.net/?retryWrites=true&w=majority"
+}`
 
 6. Load the <a href="https://raw.githubusercontent.com/mongodb/docs-assets/geospatial/restaurants.json" target="_blank">sample data</a> into the cluster using [Compass](https://www.mongodb.com/products/compass) or the Mongo Shell.
 
@@ -89,6 +90,9 @@ If you were to add one million more restaurants, the query would be too slow to 
 There are many variations of a search index definition that you could use, but here is one to start:
 
 ```javascript
+
+// index name: rest_name_autocomplete_sample
+
 {
   "mappings": {
     "dynamic": false,
@@ -109,6 +113,9 @@ There are many variations of a search index definition that you could use, but h
 Here is the autocomplete index definition used in the project 
 
 ```javascript
+
+// index name: rest_name_autocomplete_sample
+
 {
   "mappings": {
     "dynamic": false,
@@ -145,7 +152,7 @@ Here is the autocomplete index definition used in the project
 
 Try the `kentucke` search again. This, time, all the same results show up as in the previous correctly spelled search. That's because of the fuzzy parameter for the text operator.
 
-For reference, here are the two very similar though not identical queries, with the clear winner in terms of performance, customizability, and  on the left:
+For reference, here are the two very similar though not identical queries, with the clear winner in terms of performance, customizability, and user experience on the left:
 
 
 <table>
