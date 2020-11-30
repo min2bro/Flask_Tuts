@@ -91,7 +91,7 @@ There are many variations of a search index definition that you could use, but h
 
 ```javascript
 
-// index name: rest_name_autocomplete_sample
+// index name: rest_fts_sample
 
 {
   "mappings": {
@@ -157,15 +157,19 @@ For reference, here are the two very similar though not identical queries, with 
 
 <table>
   <tr>
-    <th>Atlas Search</th>
+    <th>MongoDB Atlas Search</th>
     <th>Case-Insensitive Regex</th>
+  </tr>
+  <tr>
+    <td>Typical GeoJSON Search Query</td>
+    <td>Typical GeoJSON Search Query</td>
   </tr>
   <tr>
     <td class="highlight highlight-source-js">
 <pre>
         { 
           "$search": { 
-            "index": "restaurant_fts",
+            "index": "rest_fts_sample",
             "compound":  { 
               "must": { 
                 "text": { 
