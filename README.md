@@ -162,7 +162,7 @@ For reference, here are the two very similar though not identical queries, with 
   </tr>
   <tr>
     <td>Typical GeoJSON Search Query</td>
-    <td>Typical GeoJSON Search Query</td>
+    <td>Original GeoJSON Regex Query</td>
   </tr>
   <tr>
     <td class="highlight highlight-source-js">
