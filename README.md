@@ -124,9 +124,14 @@ Here is the autocomplete index definition used in the project
   "mappings": {
     "dynamic": false,
     "fields": {
-      "address.coord": {
-        "indexShapes": false,
-        "type": "geo"
+      "address":{
+        "type": "document",
+        "fields":{
+            "coord":{
+                "indexShapes": false,
+                "type": "geo"
+                }
+        }
       },
       "name": [
         {
