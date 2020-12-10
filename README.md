@@ -90,16 +90,20 @@ If you were to add one million more restaurants, the query would be too slow to 
 There are many variations of a search index definition that you could use, but here is one to start:
 
 ```javascript
-
 // index name: rest_fts_sample
 
 {
   "mappings": {
     "dynamic": false,
     "fields": {
-      "address.coord": {
-        "indexShapes": false,
-        "type": "geo"
+      "address":{
+        "type": "document",
+        "fields":{
+            "coord":{
+                "indexShapes": false,
+                "type": "geo"
+                }
+        }
       },
       "name": {
         "analyzer": "lucene.standard",
