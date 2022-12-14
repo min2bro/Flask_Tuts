@@ -1,0 +1,5 @@
+__pycache__/
+.env
+config.json
+venv/
+mongo_atlas_regex_bad/
